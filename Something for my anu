@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For Anu ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body,html{
+  height:100%;
+  overflow:hidden;
+}
+
+/* COMMON */
+.page{
+  display:none;
+  height:100vh;
+  width:100%;
+  background-size:cover;
+  background-position:center;
+  padding:20px;
+}
+
+.active{display:block;}
+
+.red{color:red;}
+.green{color:#00ff7f;}
+.pink{color:pink;}
+
+button{
+  padding:12px 28px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+/* PAGE 1 */
+#page1{background-image:url('bg1.jpg');}
+
+.text-box{
+  font-size:18px;
+  line-height:1.6;
+}
+
+.next-btn{
+  position:absolute;
+  right:20px;
+  bottom:20px;
+  background:#ff4d6d;
+  color:white;
+}
+
+/* PAGE 2 */
+#page2{
+  background-image:url('bg2.jpg');
+  text-align:center;
+}
+
+.big{
+  font-size:48px;
+  margin-top:40px;
+}
+
+.mid{
+  font-size:36px;
+  margin:25px 0;
+  color:purple;
+}
+
+#yes{
+  background:blue;
+  color:white;
+}
+
+#no{
+  background:red;
+  color:white;
+  position:absolute;
+}
+
+/* PAGE 3 */
+#page3{
+  background-image:url('bg3.jpg');
+  text-align:center;
+}
+
+.thank{
+  font-size:52px;
+  margin-top:35vh;
+}
+
+/* HEARTS */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:22px;
+  animation:float 4s linear infinite;
+}
+
+@keyframes float{
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
+  }
+}
+
+/* FIREWORKS */
+.firework{
+  position:fixed;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1.2s ease-out forwards;
+}
+
+@keyframes explode{
+  0%{
+    transform:scale(1);
+    opacity:1;
+  }
+  100%{
+    transform:translate(var(--x),var(--y)) scale(0);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="mann_jogiya.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+  <h2 class="red">Hey anu 😗</h2><br>
+
+  <div class="text-box green" id="typing"></div>
+
+  <h2 class="red">ANU</h2>
+
+  <button class="next-btn" onclick="go(2)">NEXT ➜</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <div class="big red">Hey Anu</div>
+  <div class="mid">Will you be my Valentine 💜</div>
+
+  <button id="yes" onclick="yes()">YES 💙</button>
+  <button id="no" onclick="moveNo()">NO 😜</button>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+  <div class="thank red">THANK YOU SO MUCH ANU ❤️</div>
+  <div class="pink">— You Harsh</div>
+</div>
+
+<script>
+/* PAGE SWITCH */
+function go(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+}
+
+/* TYPING EFFECT */
+let text=`01. How are you anu?
+
+02. I know ki tum kisi par bharosa nahi karti,
+lekin mai chahta hu tum mere upar bharosa karo.
+
+03. Pehli baar tumhe dekha tha to laga
+jaise pehle bhi mile ho.
+
+04. Shayad kahi mile ho,
+ya bas dil ne pehchan liya.
+
+05. Tum muje kamal ki lagti ho anu.
+
+06. Tum se baat karke mujhe khushi milti hai.
+
+07. Tumhari aankhe, tumhari baatein —
+sab pasand hai.`;
+
+let i=0;
+let typing=document.getElementById("typing");
+
+function type(){
+  if(i<text.length){
+    typing.innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(type,40);
+  }
+}
+type();
+
+/* NO BUTTON */
+let arr=["NO","Are you sure?","Ek baar soch lo"];
+let idx=0;
+
+function moveNo(){
+  let n=document.getElementById("no");
+  n.style.left=Math.random()*80+"vw";
+  n.style.top=Math.random()*80+"vh";
+  n.innerText=arr[idx%arr.length];
+  idx++;
+}
+
+/* FIREWORK FUNCTION */
+function fireworks(){
+  let x=Math.random()*100+"vw";
+  let y=Math.random()*100+"vh";
+
+  for(let i=0;i<30;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.style.left=x;
+    f.style.top=y;
+    f.style.background=["red","yellow","orange","pink","purple","cyan"]
+      [Math.floor(Math.random()*6)];
+    f.style.setProperty("--x",(Math.random()*200-100)+"px");
+    f.style.setProperty("--y",(Math.random()*200-100)+"px");
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1200);
+  }
+}
+
+/* YES CLICK */
+function yes(){
+  // hearts
+  for(let i=0;i<70;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerText="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(2+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }
+
+  // fireworks
+  let fw=setInterval(fireworks,300);
+  setTimeout(()=>clearInterval(fw),2000);
+
+  setTimeout(()=>go(3),2500);
+}
+</script>
+
+</body>
+</html>
